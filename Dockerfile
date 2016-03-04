@@ -1,6 +1,8 @@
 FROM akel/lnmp-base:latest
 MAINTAINER Akel <akelmaister@outlook.com>
 
+RUN yum -y install memcached php-memcache php-mbstring
+
 ## clean iptablse
 rm -f /etc/sysconfig/iptables
 
