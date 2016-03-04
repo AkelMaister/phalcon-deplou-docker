@@ -73,7 +73,9 @@ mysql_deploy() {
 }
 
 nginx_conf_deploy() {
-  
+  curl "$nginxconfurl" -o /usr/local/src/nginx.conf
+  mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf_default
+  mv /usr/local/src/nginx.conf /etc/nginx/nginx.conf
 }
 
 logger() {
