@@ -4,7 +4,7 @@ MAINTAINER Akel <akelmaister@outlook.com>
 RUN yum -y install memcached php-memcache php-mbstring
 
 ## clean iptablse
-rm -f /etc/sysconfig/iptables
+RUN rm -f /etc/sysconfig/iptables
 
 ## Copy tamplates and scripts from repo.
 COPY template/nginx.conf_base /root/nginx.conf_base
