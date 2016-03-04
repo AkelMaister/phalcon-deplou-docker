@@ -44,14 +44,32 @@ archive_deploy() {
                 tar xzf /usr/local/src/archive -C /var/www
               ;;
               *)
-                echo "Archive format not correct"
+                logger "Archive format is not correct"
                 exit 1
               ;;
   esac
 }
 
 mysql_deploy() {
+  mysql -e "create database $dbname;"
+  mysql -e "GRANT ALL PRIVILEGES ON $dbname.* TO \"$dbuser\"@'localhost' IDENTIFIED BY \"$dbpass\";"
+  mysql -e "flush privileges;"
   
+  curl "$dburl" -o /usr/local/src/dump
+  type=$(echo `file /usr/local/src/dump | awk '{print $2}'`)
+  case $type in
+              "UTF-8")
+                mysql $dbname < /usr/local/src/dump
+              ;;
+              "gzip")
+                zcat /usr/local/src/dump > /usr/local/src/dump.sql
+                mysql $dbname < /usr/local/src/dump.sql
+              ;;
+              *)
+                logger "Dump format is not correct"
+                exit 1
+              ;;
+  esac
 }
 
 nginx_conf_deploy() {
