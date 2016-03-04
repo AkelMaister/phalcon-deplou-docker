@@ -37,7 +37,7 @@ server {
         listen       80 default_server;
         listen       [::]:80 default_server;
         server_name  _;
-        root         /var/www/webroot;
+        root         /var/www/public;
 
         location / {
 	    index index.php index.html index.htm;
