@@ -1,6 +1,9 @@
 FROM akel/lnmp-base:latest
 MAINTAINER Akel <akelmaister@outlook.com>
 
+## clean iptablse
+rm -f /etc/sysconfig/iptables
+
 ## Copy tamplates and scripts from repo.
 COPY template/nginx.conf_base /root/nginx.conf_base
 COPY scripts/initial.sh /root/initial.sh
