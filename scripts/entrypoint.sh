@@ -3,6 +3,7 @@ if [[ -x /root/initial.sh ]] ; then
   /root/initial.sh
 fi
 
+systemctl restart iptables
 systemctl restart nginx
 systemctl restart php-fpm
 systemctl restart mariadb
