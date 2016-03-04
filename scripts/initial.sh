@@ -1,7 +1,7 @@
 #!/bin/bash
 start() {
   mkdir -p /var/www/;
-  chmod -R apache:apache /var/www/;
+  chown -R apache:apache /var/www/;
   if [[ $archiveurl'z' != 'z' ]] ; then 
     archive_deploy
     rm -f /usr/local/src/archive
@@ -76,6 +76,7 @@ mysql_deploy() {
                               logger "Cant extract dump. Do it yourself"
                             ;;
                 esac
+              ;;
               *)
                 logger "Dump format is not correct"
                 exit 1
