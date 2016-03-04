@@ -1,7 +1,7 @@
 #!/bin/bash
 start() {
   mkdir -p /var/www/;
-  chmod -R nginx:nginx /var/www/;
+  chmod -R apache:apache /var/www/;
   if [[ $archiveurl'z' != 'z' ]] ; then 
     archive_deploy
     rm -f /usr/local/src/archive
@@ -58,13 +58,24 @@ mysql_deploy() {
   curl "$dburl" -o /usr/local/src/dump
   type=$(echo `file /usr/local/src/dump | awk '{print $2}'`)
   case $type in
-              "UTF-8")
+              "UTF-8"|"HTML")
                 mysql $dbname < /usr/local/src/dump
               ;;
               "gzip")
-                zcat /usr/local/src/dump > /usr/local/src/dump.sql
-                mysql $dbname < /usr/local/src/dump.sql
-              ;;
+                zcat usr/local/src/dump > /usr/local/src/tmp
+                type2=`file /usr/local/src/tmp | awk '{print $2}'`
+                case $type2 in
+                            "POSTX")
+                              tar xf tmp --to-stdout >> /usr/local/src/tmp2
+                              mysql $dbname < /usr/local/src/tmp2
+                            ;;
+                            "UTF-8"|"HTML")
+                              mysql $dbname < /usr/local/src/tmp
+                            ;;
+                            *)
+                              logger "Cant extract dump. Do it yourself"
+                            ;;
+                esac
               *)
                 logger "Dump format is not correct"
                 exit 1
