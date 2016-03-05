@@ -1,4 +1,6 @@
 #!/bin/bash
+rm -f /etc/sysconfig/iptables
+
 if [[ -x /root/initial.sh ]] ; then 
   /root/initial.sh
   chmod -x /root/initial.sh
