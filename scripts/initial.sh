@@ -62,7 +62,7 @@ mysql_deploy() {
                 mysql $dbname < /usr/local/src/dump
               ;;
               "gzip")
-                zcat usr/local/src/dump > /usr/local/src/tmp
+                zcat /usr/local/src/dump > /usr/local/src/tmp
                 type2=`file /usr/local/src/tmp | awk '{print $2}'`
                 case $type2 in
                             "POSTX")
