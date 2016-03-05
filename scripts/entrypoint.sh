@@ -1,6 +1,7 @@
 #!/bin/bash
 if [[ -x /root/initial.sh ]] ; then 
   /root/initial.sh
+  chmod -x /root/initial.sh
 fi
 
 systemctl restart iptables
